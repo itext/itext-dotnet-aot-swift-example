@@ -224,3 +224,7 @@ nbactions*.xml
 src/core/iTextSharp.xml
 
 .idea/
+iTextNativeAOTLibrary.framework/
+xcuserdata/
+project.xcworkspace/
+
