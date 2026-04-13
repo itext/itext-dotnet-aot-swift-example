@@ -8,17 +8,11 @@ Sample iOS app to run iText on iOS. The code simply creates PDF with hardcoded (
 ### Build and prepare framework
 
 ```bash
+# cleanup
+rm -R ./iTextNativeAOTLibrary/bin ./iTextNativeAOTLibrary/obj ./iTextNativeAOTLibrary.framework
+
 # prepare framework directory
 mkdir -p "iTextNativeAOTLibrary.framework"
-
-# build dotnet code into aot dylib
-dotnet publish -r iossimulator-arm64 ./iTextNativeAOTLibrary/iTextNativeAOTLibrary.csproj -c Release
-
-# modify rpath in dylib
-install_name_tool -id @rpath/iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary ./iTextNativeAOTLibrary/bin/Release/net10.0/iossimulator-arm64/publish/iTextNativeAOTLibrary.dylib
-
-# prepare framework file in target directory
-lipo -create ./iTextNativeAOTLibrary/bin/Release/net10.0/iossimulator-arm64/publish/iTextNativeAOTLibrary.dylib -output iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary
 
 # add property list for the prepared framework
 cat > "iTextNativeAOTLibrary.framework/Info.plist" << EOF
@@ -39,6 +33,16 @@ cat > "iTextNativeAOTLibrary.framework/Info.plist" << EOF
 </dict>
 </plist>
 EOF
+
+# build dotnet code into aot dylib for simulator, modify rpath in dylibs and prepare framework file in target directory
+dotnet publish -r iossimulator-arm64 ./iTextNativeAOTLibrary/iTextNativeAOTLibrary.csproj -c Release
+install_name_tool -id @rpath/iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary ./iTextNativeAOTLibrary/bin/Release/net10.0/iossimulator-arm64/publish/iTextNativeAOTLibrary.dylib
+lipo -create ./iTextNativeAOTLibrary/bin/Release/net10.0/iossimulator-arm64/publish/iTextNativeAOTLibrary.dylib -output iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary
+
+# if you want to run on device, then use the next (commented) commands instead of the ones above
+# dotnet publish -r ios-arm64 ./iTextNativeAOTLibrary/iTextNativeAOTLibrary.csproj -c Release
+# install_name_tool -id @rpath/iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary ./iTextNativeAOTLibrary/bin/Release/net10.0/ios-arm64/publish/iTextNativeAOTLibrary.dylib
+# lipo -create ./iTextNativeAOTLibrary/bin/Release/net10.0/ios-arm64/publish/iTextNativeAOTLibrary.dylib -output iTextNativeAOTLibrary.framework/iTextNativeAOTLibrary
 
 ```
 
