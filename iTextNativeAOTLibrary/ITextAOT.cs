@@ -7,7 +7,7 @@ namespace iTextNativeAOTLibrary;
 
 public class ITextAOT
 {
-    [UnmanagedCallersOnly(EntryPoint = "itext_aotsample_print")]
+    [UnmanagedCallersOnly(EntryPoint = "itext_create_pdf")]
     public static IntPtr Print(IntPtr text, IntPtr filePath)
     {
         new iText.Kernel.Utils.RegisterDefaultDiContainer();

@@ -1,1 +1,1 @@
-extern char* itext_aotsample_print(const char* text, const char* path);
+extern char* itext_create_pdf(const char* text, const char* path);

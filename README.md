@@ -6,8 +6,8 @@ This is a sample Swift iOS app that runs iText. The app simply creates a PDF fil
 ## Structure
 The repository contains two projects:
 * `iTextNativeAOTLibrary` - a .NET project compiled as Native AOT, exposing iText PDF generation as a native shared 
-library (via the `itext_aotsample_print` function), callable from Swift, C, or any language with C FFI support.
-* `iTextNativeAOTApp` - a Swift app demonstrating how to call the exported `itext_aotsample_print` function to generate 
+library (via the `itext_create_pdf` function), callable from Swift, C, or any language with C FFI support.
+* `iTextNativeAOTApp` - a Swift app demonstrating how to call the exported `itext_create_pdf` function to generate 
 a PDF.
 
 ## How to run
